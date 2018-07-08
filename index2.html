@@ -37,8 +37,6 @@
   <tr>
    <td colspan="2">
     <input type="button" value="Save" onclick="save_user();" />
-    <input type="button" value="Update" onclick="update_user();" />
-    <input type="button" value="Delete" onclick="delete_user();" />
    </td>
   </tr>
  </table>
@@ -47,8 +45,9 @@
  
  <table id="tbl_users_list" border="1">
   <tr>
-   	<td>First Name</td>
-   	<td>Middle Name</td>
+   	<td>Index</td>
+	<td>First Name</td>
+	<td>Middle Name</td>
 	<td>Last Name</td>
 	<td>Email</td>
   </tr>
@@ -70,8 +69,8 @@
    var cellName = row.insertCell(1);
    	cellId.appendChild(document.createTextNode(childKey));
    	cellName.appendChild(document.createTextNode(childData.fname));
-   	cellName.appendChild(document.createTextNode(childData.lname));
-	cellName.appendChild(document.createTextNode(childData.mname));
+   	cellName.appendChild(document.createTextNode(childData.mname));
+	cellName.appendChild(document.createTextNode(childData.lname));
 	cellName.appendChild(document.createTextNode(childData.email));
    
    rowIndex = rowIndex + 1;
