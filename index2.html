@@ -18,136 +18,144 @@
 	
 </head>
 <body>
- <table>
-  <tr>
-   <td>Id: </td>
-   <td><input type="text" name="id" id="user_id" /></td>
-  </tr>
-  <tr>
-   <td>First Name: </td>
-   <td><input type="text" name="first_name" id="first_name" /></td>
-  </tr>
-  <tr>
-   <td>Middle Name: </td>
-   <td><input type="text" name="middle_name" id="middle_name" /></td>
-  </tr>
-  <tr>
-   <td>Last Name: </td>
-   <td><input type="text" name="last_name" id="last_name" /></td>
-  </tr>
-  <tr>
-   <td>Email: </td>
-   <td><input type="text" name="emailadd" id="emailadd" /></td>
-  </tr>
-  <tr>
-   <td colspan="2">
-    <input type="button" value="Save" onclick="save_user();" />
-    <input type="button" value="Update" onclick="update_user();" />
-    <input type="button" value="Delete" onclick="delete_user();" />
-   </td>
-  </tr>
- </table>
+	<table>
+	  	<tr>
+		  	<td>Id: </td>
+		  	<td><input type="text" name="id" id="user_id" /></td>
+	  	</tr>
+		<tr>
+			<td>First Name: </td>
+		   <td><input type="text" name="first_name" id="first_name" /></td>
+		</tr>
+		<tr>
+			<td>Middle Name: </td>
+			<td><input type="text" name="middle_name" id="middle_name" /></td>
+		</tr>
+		<tr>
+ 			<td>Last Name: </td>
+			<td><input type="text" name="last_name" id="last_name" /></td>
+		</tr>
+		<tr>
+			<td>Email: </td>
+			<td><input type="text" name="emailadd" id="emailadd" /></td>
+		</tr>
+		<tr>
+			<td>Gender: </td>
+			<td><input list="Gender" name="Gender"></td>
+			<datalist id="Gender">
+				<option value="Male">
+				<option value="Female">
+			</datalist>
+		</tr>
+		<tr>
+		<td colspan="2">
+			<input type="button" value="Save" onclick="save_user();" />
+			<input type="button" value="Update" onclick="update_user();" />
+			<input type="button" value="Delete" onclick="delete_user();" />
+		</td>
+		</tr>
+ 	</table>
  
- <h3>Users List</h3>
+ 	<h3>Users List</h3>
  
- <table id="tbl_users_list" border="1">
-  <tr>
-   	<td>#ID</td>
-   	<td>FIRST NAME</td>
-   	<td>MIDDLE NAME</td>
-   	<td>LAST NAME</td>
-	<td>EMAIL ADDRESS</td>
-  </tr>
- </table>
+ 	<table id="tbl_users_list" border="1">
+ 		<tr>
+			<td>#ID</td>
+			<td>FIRST NAME</td>
+			<td>MIDDLE NAME</td>
+			<td>LAST NAME</td>
+			<td>EMAIL ADDRESS</td>
+		</tr>
+ 	</table>
  
- <script>
+ 	<script>
  
-  	var tblUsers = document.getElementById('tbl_users_list');
-  	var databaseRef = firebase.database().ref('users/');
-  	var rowIndex = 1;
+  		var tblUsers = document.getElementById('tbl_users_list');
+		var databaseRef = firebase.database().ref('users/');
+		var rowIndex = 1;
   
-  	databaseRef.once('value', function(snapshot) {
-    snapshot.forEach(function(childSnapshot) {
-   	var childKey = childSnapshot.key;
-   	var childData = childSnapshot.val();
+		databaseRef.once('value', function(snapshot) {
+		snapshot.forEach(function(childSnapshot) {
+		var childKey = childSnapshot.key;
+		var childData = childSnapshot.val();
    
-   	var row = tblUsers.insertRow(rowIndex);
-   	var cellId = row.insertCell(0);
-   	var fName = row.insertCell(1);
-   	var mName = row.insertCell(2);
-   	var lName = row.insertCell(3);
-	var emailaddress = row.insertCell(4);
-		cellId.appendChild(document.createTextNode(childKey));
-		fName.appendChild(document.createTextNode(childData.first_name));
-		mName.appendChild(document.createTextNode(childData.middle_name));   
-		lName.appendChild(document.createTextNode(childData.last_name));   
-		emailaddress.appendChild(document.createTextNode(childData.emailadd));   
-		rowIndex = rowIndex + 1;
-    });
-  });
+		var row = tblUsers.insertRow(rowIndex);
+   		var cellId = row.insertCell(0);
+		var fName = row.insertCell(1);
+		var mName = row.insertCell(2);
+		var lName = row.insertCell(3);
+		var emailaddress = row.insertCell(4);
+			cellId.appendChild(document.createTextNode(childKey));
+			fName.appendChild(document.createTextNode(childData.first_name));
+			mName.appendChild(document.createTextNode(childData.middle_name));   
+			lName.appendChild(document.createTextNode(childData.last_name));   
+			emailaddress.appendChild(document.createTextNode(childData.emailadd));   
+			rowIndex = rowIndex + 1;
+		});
+  		});
    
-  function save_user(){
-	  var first_name = document.getElementById('first_name').value;
-	  var middle_name = document.getElementById('middle_name').value;
-	  var last_name = document.getElementById('last_name').value;
-	  var emailadd = document.getElementById('emailadd').value;
+	function save_user(){
+		var first_name = document.getElementById('first_name').value;
+		var middle_name = document.getElementById('middle_name').value;
+		var last_name = document.getElementById('last_name').value;
+		var emailadd = document.getElementById('emailadd').value;
    
-	  var uid = firebase.database().ref().child('users').push().key;
+		var uid = firebase.database().ref().child('users').push().key;
    
-	  var data = {
-		  user_id: uid,
-		  first_name: first_name,
-		  middle_name: middle_name,
-		  last_name: last_name,
-		  emailadd: emailadd
-	  }
+	  	var data = {
+			user_id: uid,
+		  	first_name: first_name,
+		  	middle_name: middle_name,
+		  	last_name: last_name,
+		  	emailadd: emailadd
+	  	}
    
-	  var updates = {};
-	  updates['/users/' + uid] = data;
-	  firebase.database().ref().update(updates);
+	  	var updates = {};
+	  	updates['/users/' + uid] = data;
+	  	firebase.database().ref().update(updates);
    
-	  alert('The user is created successfully!');
-	  reload_page();
-  }
+	  	alert('The user is created successfully!');
+	  	reload_page();
+  	}
   
-  function update_user(){
-	  var first_name = document.getElementById('first_name').value;
-	  var middle_name = document.getElementById('middle_name').value;
-	  var last_name = document.getElementById('last_name').value;
-	  var emailadd = document.getElementById('emailadd').value;
+  	function update_user(){
+	  	var first_name = document.getElementById('first_name').value;
+	  	var middle_name = document.getElementById('middle_name').value;
+	  	var last_name = document.getElementById('last_name').value;
+	  	var emailadd = document.getElementById('emailadd').value;
    
-	  var uid = firebase.database().ref().child('users').push().key;
+	  	var uid = firebase.database().ref().child('users').push().key;
    
-	  var data = {
-		  user_id: uid,
-		  first_name: first_name,
-		  middle_name: middle_name,
-		  last_name: last_name,
-		  emailadd: emailadd
-	  }
+	  	var data = {
+		  	user_id: uid,
+		  	first_name: first_name,
+		  	middle_name: middle_name,
+		  	last_name: last_name,
+		  	emailadd: emailadd
+	  	}
    
-	  var updates = {};
-	  updates['/users/' + user_id] = data;
-	  firebase.database().ref().update(updates);
+	  	var updates = {};
+	  	updates['/users/' + user_id] = data;
+	  	firebase.database().ref().update(updates);
    
-	  alert('The user is updated successfully!');
+	  	alert('The user is updated successfully!');
    
-	  reload_page();
-  }
+		reload_page();
+  	}
   
-  function delete_user(){
-   var user_id = document.getElementById('user_id').value;
+  	function delete_user(){
+   		var user_id = document.getElementById('user_id').value;
   
-   firebase.database().ref().child('/users/' + user_id).remove();
-   alert('The user is deleted successfully!');
-   reload_page();
-  }
+   		firebase.database().ref().child('/users/' + user_id).remove();
+   		alert('The user is deleted successfully!');
+   		reload_page();
+  	}
   
-  function reload_page(){
-   window.location.reload();
-  }
+  	function reload_page(){
+   	window.location.reload();
+  	}
   
- </script>
+	</script>
  
 </body>
 </html>
