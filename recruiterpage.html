@@ -1,6 +1,6 @@
 <html>
 <head>
- <title>Investor VA Services Applicant Page</title>
+ <title>Firebase Realtime Database Web</title>
  	<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
 	<script>
 		// Initialize Firebase
@@ -18,22 +18,13 @@
 <body>
  <table>
   <tr>
-   <td>First Name: </td>
-   <td><input type="text" name="fname" id="fname" /></td>
+   <td>Id: </td>
+   <td><input type="text" name="id" id="user_id" /></td>
   </tr>
   <tr>
-   <td>Middle Name: </td>
-   <td><input type="text" name="mname" id="mname" /></td>
+   <td>User Name: </td>
+   <td><input type="text" name="user_name" id="user_name" /></td>
   </tr>
-  <tr>
-   <td>Last Name: </td>
-   <td><input type="text" name="lname" id="lname" /></td>
-  </tr>
-  <tr>
-   <td>Email: </td>
-   <td><input type="email" name="email" id="email" /></td>
-  </tr>
-	 
   <tr>
    <td colspan="2">
     <input type="button" value="Save" onclick="save_user();" />
@@ -47,10 +38,8 @@
  
  <table id="tbl_users_list" border="1">
   <tr>
-   	<td>First Name</td>
-   	<td>Middle Name</td>
-	<td>Last Name</td>
-	<td>Email</td>
+   <td>#ID</td>
+   <td>NAME</td>
   </tr>
  </table>
  
@@ -68,33 +57,28 @@
    var row = tblUsers.insertRow(rowIndex);
    var cellId = row.insertCell(0);
    var cellName = row.insertCell(1);
-   	cellId.appendChild(document.createTextNode(childKey));
-   	cellName.appendChild(document.createTextNode(childData.fname));
-   	cellName.appendChild(document.createTextNode(childData.lname));
-	cellName.appendChild(document.createTextNode(childData.mname));
-	cellName.appendChild(document.createTextNode(childData.email));
+   cellId.appendChild(document.createTextNode(childKey));
+   cellName.appendChild(document.createTextNode(childData.user_name));
    
    rowIndex = rowIndex + 1;
     });
   });
    
   function save_user(){
-	  var fname = document.getElementById('fname').value;
-	  var mname = document.getElementById('mname').value;
-	  var lname = document.getElementById('lname').value;
-	  var email = document.getElementById('email').value;
-	  var uid = firebase.database().ref().child('users').push().key;
+   var user_name = document.getElementById('user_name').value;
+  
+   var uid = firebase.database().ref().child('users').push().key;
    
-	  var data = {
-		  user_id: uid,
-		  fname: fname
-	  }
+   var data = {
+    user_id: uid,
+    user_name: user_name
+   }
    
    var updates = {};
    updates['/users/' + uid] = data;
    firebase.database().ref().update(updates);
    
-   alert('Application Received Successfully!');
+   alert('The user is created successfully!');
    reload_page();
   }
   
