@@ -28,6 +28,10 @@
    <td><input type="text" name="first_name" id="first_name" /></td>
   </tr>
   <tr>
+   <td>Middle Name: </td>
+   <td><input type="text" name="middle_name" id="middle_name" /></td>
+  </tr>
+  <tr>
    <td colspan="2">
     <input type="button" value="Save" onclick="save_user();" />
     <input type="button" value="Update" onclick="update_user();" />
@@ -42,6 +46,7 @@
   <tr>
    <td>#ID</td>
    <td>FIRST NAME</td>
+   <td>MIDDLE NAME</td>
   </tr>
  </table>
  
@@ -68,12 +73,14 @@
    
   function save_user(){
    var first_name = document.getElementById('first_name').value;
-  
+   var middle_name = document.getElementById('middle_name').value;
+	  
    var uid = firebase.database().ref().child('users').push().key;
    
    var data = {
     user_id: uid,
-    first_name: first_name
+    first_name: first_name,
+	middle_name: middle_name
    }
    
    var updates = {};
@@ -86,11 +93,14 @@
   
   function update_user(){
    var first_name = document.getElementById('first_name').value;
+   var middle_name = document.getElementById('middle_name').value;
+	  
    var user_id = document.getElementById('user_id').value;
 
    var data = {
     user_id: user_id,
-    first_name: first_name
+    first_name: first_name,
+	middle_name: middle_name
    }
    
    var updates = {};
