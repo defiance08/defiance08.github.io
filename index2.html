@@ -84,7 +84,7 @@
 	  var mname = document.getElementById('mname').value;
 	  var lname = document.getElementById('lname').value;
 	  var email = document.getElementById('email').value;
-	  var uid = firebase.database().ref().child('users').push().key;
+	  var uid = firebase.database().ref().child('applicants').push().key;
    
 	  var data = {
 		  user_id: uid,
