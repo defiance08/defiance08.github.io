@@ -58,7 +58,7 @@
  <script>
  
   var tblUsers = document.getElementById('tbl_users_list');
-  var databaseRef = firebase.database().ref('users/');
+  var databaseRef = firebase.database().ref('applicants/');
   var rowIndex = 1;
   
   databaseRef.once('value', function(snapshot) {
@@ -95,9 +95,9 @@
 	  }
    
    var updates = {};
-   updates['/users/' + uid] = data;
+   updates['/applicants/' + uid] = data;
    firebase.database().ref().update(updates);
-   
+ 
    alert('Application Received Successfully!');
    reload_page();
   }
