@@ -63,10 +63,11 @@
    
    var row = tblUsers.insertRow(rowIndex);
    var cellId = row.insertCell(0);
-   var cellName = row.insertCell(1);
+   var fName = row.insertCell(1);
+   var mName = row.insertCell(2);
    cellId.appendChild(document.createTextNode(childKey));
-   cellName.appendChild(document.createTextNode(childData.first_name));
-   cellName.appendChild(document.createTextNode(childData.middle_name));   
+   fName.appendChild(document.createTextNode(childData.first_name));
+   mName.appendChild(document.createTextNode(childData.middle_name));   
    rowIndex = rowIndex + 1;
     });
   });
