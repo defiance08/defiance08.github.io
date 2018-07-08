@@ -86,7 +86,10 @@
    
 	  var data = {
 		  user_id: uid,
-		  fname: fname
+		  fname: fname,
+		  mname: mname,
+		  lname: lname,
+		  email: email
 	  }
    
    var updates = {};
@@ -94,32 +97,6 @@
    firebase.database().ref().update(updates);
    
    alert('Application Received Successfully!');
-   reload_page();
-  }
-  
-  function update_user(){
-   var user_name = document.getElementById('user_name').value;
-   var user_id = document.getElementById('user_id').value;
-
-   var data = {
-    user_id: user_id,
-    user_name: user_name
-   }
-   
-   var updates = {};
-   updates['/users/' + user_id] = data;
-   firebase.database().ref().update(updates);
-   
-   alert('The user is updated successfully!');
-   
-   reload_page();
-  }
-  
-  function delete_user(){
-   var user_id = document.getElementById('user_id').value;
-  
-   firebase.database().ref().child('/users/' + user_id).remove();
-   alert('The user is deleted successfully!');
    reload_page();
   }
   
