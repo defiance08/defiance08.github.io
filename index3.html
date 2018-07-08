@@ -36,17 +36,17 @@
                 <form id="feedbackForm" class="text-center">
                   	<div class="form-group">
                     	<label for="name">First Name</label>
-                    	<input type="text" class="form-control" id="firstname" name="Fname" placeholder="First Name" aria-describedby="nameHelp">
+                    	<input type="text" class="form-control" id="fname" name="firstname" placeholder="First Name" aria-describedby="nameHelp">
 	                    <span id="nameHelp" class="form-text text-muted" style="display: none;">Please enter your first name.</span>
                   	</div>
                   	<div class="form-group">
                     	<label for="name">Middle Name</label>
-                    	<input type="text" class="form-control" id="middlename" name="Mname" placeholder="Middle Name" aria-describedby="nameHelp">
+                    	<input type="text" class="form-control" id="mname" name="middle name" placeholder="Middle Name" aria-describedby="nameHelp">
 	                    <span id="nameHelp" class="form-text text-muted" style="display: none;">Please enter your middle name.</span>
                   	</div>
 					<div class="form-group">
     	                <label for="name">Last Name</label>
-        	            <input type="text" class="form-control" id="lastname" name="Lname" placeholder="Last Name" aria-describedby="nameHelp">
+        	            <input type="text" class="form-control" id="lname" name="last name" placeholder="Last Name" aria-describedby="nameHelp">
             	        <span id="nameHelp" class="form-text text-muted" style="display: none;">Please enter your last name.</span>
                   	</div>
                   	<div class="form-group">
@@ -69,7 +69,7 @@
                     <textarea rows="10" cols="100" class="form-control" id="message" name="message" placeholder="Message" aria-describedby="messageHelp"></textarea>
                     <span id="messageHelp" class="form-text text-muted" style="display: none;">Please enter a message.</span>
                   </div>
-                  <button type="submit" id="feedbackSubmit" class="btn btn-primary btn-lg"> Send</button>
+                  <button type="submit" id="feedbackSubmit" class="btn btn-primary btn-lg" onClick="save_user()"> Apply</button>
                 </form>
               </div>
             </div>
@@ -91,5 +91,73 @@
     <!-- Include all compiled plugins (below), or include individual files as needed --> 
     <script src="js/popper.min.js"></script> 
     <script src="js/bootstrap-4.0.0.js"></script>
+	<script>
+ 
+  		var tblUsers = document.getElementById('tbl_users_list');
+		var databaseRef = firebase.database().ref('users/');
+		var rowIndex = 1;
+  
+		databaseRef.once('value', function(snapshot) {
+			snapshot.forEach(function(childSnapshot) {
+				var childKey = childSnapshot.key;
+				var childData = childSnapshot.val();
+   
+				var row = tblUsers.insertRow(rowIndex);
+				var cellId = row.insertCell(0);
+				var cellName = row.insertCell(1);
+				cellId.appendChild(document.createTextNode(childKey));
+				cellName.appendChild(document.createTextNode(childData.user_name));
+   
+				rowIndex = rowIndex + 1;
+			});
+		});
+   
+		function save_user(){
+			var user_name = document.getElementById('user_name').value;
+			var uid = firebase.database().ref().child('users').push().key;
+   
+			var data = {
+				user_id: uid,
+				user_name: user_name
+			}
+   
+			var updates = {};
+			updates['/users/' + uid] = data;
+			firebase.database().ref().update(updates);
+   
+			alert('The user is created successfully!');
+			reload_page();
+		}
+  
+  		function update_user(){
+			var user_name = document.getElementById('user_name').value;
+			var user_id = document.getElementById('user_id').value;
+
+			var data = {
+				user_id: user_id,
+				user_name: user_name
+			}
+   
+			var updates = {};
+			updates['/users/' + user_id] = data;
+			firebase.database().ref().update(updates);
+   
+			alert('The user is updated successfully!');
+   
+			reload_page();
+		}
+  
+		function delete_user(){
+			var user_id = document.getElementById('user_id').value;
+  
+			firebase.database().ref().child('/users/' + user_id).remove();
+			alert('The user is deleted successfully!');
+			reload_page();
+		}
+  
+		function reload_page(){
+			window.location.reload();
+		}
+	</script>
   </body>
 </html>
