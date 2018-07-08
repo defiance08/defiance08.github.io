@@ -113,12 +113,18 @@
 		});
    
 		function save_user(){
-			var user_name = document.getElementById('user_name').value;
+			var fname = document.getElementById('fname').value;
+			var mname = document.getElementById('fname').value;
+			var lname = document.getElementById('fname').value;
+			var gender = document.getElementById('Gender').value;
 			var uid = firebase.database().ref().child('users').push().key;
    
 			var data = {
 				user_id: uid,
-				user_name: user_name
+				fname: fname,
+				mname: mname,
+				lname: lname,
+				gender: gender
 			}
    
 			var updates = {};
