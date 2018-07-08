@@ -1,44 +1,37 @@
 <html>
 <head>
- <title>Investor VA Services Applicant Page</title>
- 	
+ <title>Firebase Realtime Database Web</title>
+
 	<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
 	<script>
-		// Initialize Firebase
-		var config = {
-			apiKey: "AIzaSyAbAbBXbb73WhFo0V2m8IVskCPtcHis_s0",
-			authDomain: "ivas-d25b6.firebaseapp.com",
-			databaseURL: "https://ivas-d25b6.firebaseio.com",
-			projectId: "ivas-d25b6",
-			storageBucket: "ivas-d25b6.appspot.com",
-			messagingSenderId: "1085374841351"
-  		};
-		firebase.initializeApp(config);
+  	// Initialize Firebase
+  	var config = {
+	  apiKey: "AIzaSyCGecVcagEL8XotKdEjfrd-g_5RHd3Qtn8",
+	  authDomain: "ivas-applicants.firebaseapp.com",
+	  databaseURL: "https://ivas-applicants.firebaseio.com",
+	  projectId: "ivas-applicants",
+	  storageBucket: "ivas-applicants.appspot.com",
+	  messagingSenderId: "46858942694"
+  	};
+	firebase.initializeApp(config);
 	</script>
 	
 </head>
 <body>
  <table>
   <tr>
+   <td>Id: </td>
+   <td><input type="text" name="id" id="user_id" /></td>
+  </tr>
+  <tr>
    <td>First Name: </td>
-   <td><input type="text" name="fname" id="fname" /></td>
+   <td><input type="text" name="first_name" id="first_name" /></td>
   </tr>
-  <tr>
-   <td>Middle Name: </td>
-   <td><input type="text" name="mname" id="mname" /></td>
-  </tr>
-  <tr>
-   <td>Last Name: </td>
-   <td><input type="text" name="lname" id="lname" /></td>
-  </tr>
-  <tr>
-   <td>Email: </td>
-   <td><input type="email" name="email" id="email" /></td>
-  </tr>
-	 
   <tr>
    <td colspan="2">
     <input type="button" value="Save" onclick="save_user();" />
+    <input type="button" value="Update" onclick="update_user();" />
+    <input type="button" value="Delete" onclick="delete_user();" />
    </td>
   </tr>
  </table>
@@ -47,18 +40,15 @@
  
  <table id="tbl_users_list" border="1">
   <tr>
-   	<td>Index</td>
-	<td>First Name</td>
-	<td>Middle Name</td>
-	<td>Last Name</td>
-	<td>Email</td>
+   <td>#ID</td>
+   <td>FIRST NAME</td>
   </tr>
  </table>
  
  <script>
  
   var tblUsers = document.getElementById('tbl_users_list');
-  var databaseRef = firebase.database().ref('applicants/');
+  var databaseRef = firebase.database().ref('users/');
   var rowIndex = 1;
   
   databaseRef.once('value', function(snapshot) {
@@ -69,36 +59,54 @@
    var row = tblUsers.insertRow(rowIndex);
    var cellId = row.insertCell(0);
    var cellName = row.insertCell(1);
-   	cellId.appendChild(document.createTextNode(childKey));
-   	cellName.appendChild(document.createTextNode(childData.fname));
-   	cellName.appendChild(document.createTextNode(childData.mname));
-	cellName.appendChild(document.createTextNode(childData.lname));
-	cellName.appendChild(document.createTextNode(childData.email));
+   cellId.appendChild(document.createTextNode(childKey));
+   cellName.appendChild(document.createTextNode(childData.first_name));
    
    rowIndex = rowIndex + 1;
     });
   });
    
   function save_user(){
-	  var fname = document.getElementById('fname').value;
-	  var mname = document.getElementById('mname').value;
-	  var lname = document.getElementById('lname').value;
-	  var email = document.getElementById('email').value;
-	  var uid = firebase.database().ref().child('applicants').push().key;
+   var first_name = document.getElementById('first_name').value;
+  
+   var uid = firebase.database().ref().child('users').push().key;
    
-	  var data = {
-		  user_id: uid,
-		  fname: fname,
-		  mname: mname,
-		  lname: lname,
-		  email: email
-	  }
+   var data = {
+    user_id: uid,
+    first_name: first_name
+   }
    
    var updates = {};
-   updates['/applicants/' + uid] = data;
+   updates['/users/' + uid] = data;
    firebase.database().ref().update(updates);
- 
-   alert('Application Received Successfully!');
+   
+   alert('The user is created successfully!');
+   reload_page();
+  }
+  
+  function update_user(){
+   var first_name = document.getElementById('first_name').value;
+   var user_id = document.getElementById('user_id').value;
+
+   var data = {
+    user_id: user_id,
+    first_name: first_name
+   }
+   
+   var updates = {};
+   updates['/users/' + user_id] = data;
+   firebase.database().ref().update(updates);
+   
+   alert('The user is updated successfully!');
+   
+   reload_page();
+  }
+  
+  function delete_user(){
+   var user_id = document.getElementById('user_id').value;
+  
+   firebase.database().ref().child('/users/' + user_id).remove();
+   alert('The user is deleted successfully!');
    reload_page();
   }
   
