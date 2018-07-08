@@ -197,20 +197,12 @@
         	            <input type="text" class="form-control" id="lastname" name="Lname" placeholder="Last Name" aria-describedby="nameHelp">
             	        <span id="nameHelp" class="form-text text-muted" style="display: none;">Please enter your last name.</span>
                   </div>
-                  	<div class="form-group">
-                   	  <label for="name">Gender</label>
-                    	<div class="list-group"> <a href="#" class="list-group-item active">
-                    	  <h5 class="mb-1">Active List Group Item Heading</h5>
-                    	  <p class="mb-1">List Group Item Text</p>
-                    	  </a> <a href="#" class="list-group-item">
-                    	    <h5 class="mb-1">Second List Group Item Heading</h5>
-                    	    <p class="mb-1">List Group Item Text</p>
-                    	    </a> <a class="list-group-item disabled">
-                    	      <h5 class="mb-1">Disabled Group Item Heading</h5>
-                    	      <p class="mb-1">Disabled Group Item Text</p>
-                  	      </a> </div>
-                    	<input type="text" class="form-control" id="firstname" name="Fname" placeholder="First Name" aria-describedby="nameHelp">
-	                    <span id="nameHelp" class="form-text text-muted" style="display: none;">Please enter your name.</span>
+                  	<div class="dropdown">
+                   	  <button class="btn btn-default dropdown-toggle" type="button" id="gender" data-toggle="dropdown">Gender<span class="caret"></span></button>
+					  <ul class="dropdown-item">
+							<li>Male</li>
+						  	<li>Female</li>
+					  </ul>
                   	</div>					
                   <div class="form-group">
                     <label for="email">E-Mail</label>
