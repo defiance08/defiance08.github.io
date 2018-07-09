@@ -25,23 +25,19 @@
 	  	</tr>
 		<tr>
 			<td>First Name: </td>
-		   <td><input type="text" name="first_name" id="first_name" /></td>
+		   <td><input type="text" name="first_name" id="first_name" required></td>
 		</tr>
 		<tr>
 			<td>Middle Name: </td>
-			<td><input type="text" name="middle_name" id="middle_name" /></td>
+			<td><input type="text" name="middle_name" id="middle_name" required></td>
 		</tr>
 		<tr>
  			<td>Last Name: </td>
-			<td><input type="text" name="last_name" id="last_name" /></td>
-		</tr>
-		<tr>
-			<td>Email: </td>
-			<td><input type="text" name="emailadd" id="emailadd" /></td>
+			<td><input type="text" name="last_name" id="last_name" required></td>
 		</tr>
 		<tr>
 			<td>Gender: </td>
-			<td><input list="Gender" name="Gender"></td>
+			<td><input list="Gender" name="Gender" required></td>
 			<datalist id="Gender">
 				<option value="Male">
 				<option value="Female">
@@ -49,7 +45,31 @@
 		</tr>
 		<tr>
 			<td>Primary Mobile Number: </td>
-			<td><input type="text" name="mobileprimary" id="mobile primary "pattern="[09]{4}[-][1-9]{1}[0-9]{2}[-][0-9]{4}"></td>
+			<td><input type="text" name="mobileprimary" id="mobileprimary" pattern="[09]{4}[-][1-9]{1}[0-9]{2}[-][0-9]{4}" required></td>
+		</tr>
+		<tr>
+			<td>Secondary Mobile Number: </td>
+			<td><input type="text" name="mobilesecondary" id="mobilesecondary" pattern="[09]{4}[-][1-9]{1}[0-9]{2}[-][0-9]{4}"></td>
+		</tr>
+		<tr>
+			<td>Primary Landline: </td>
+			<td><input type="text" name="landlineprimary" id="landlineprimary" pattern="[0][0-9]{2}[-][1-9]{1}[0-9]{2}[-][0-9]{4}" required></td>
+		</tr>
+		<tr>
+			<td>Secondary Landline: </td>
+			<td><input type="text" name="landlinesecondary" id="landlinesecondary" pattern="[0][0-9]{2}[-][1-9]{1}[0-9]{2}[-][0-9]{4}"></td>
+		</tr>		
+		<tr>
+			<td>Email: </td>
+			<td><input type="text" name="emailadd" id="emailadd" required></td>
+		</tr>
+		<tr>
+			<td>Skype ID: </td>
+			<td><input type="text" name="skype_id" id="skype_id" required></td>
+		</tr>
+		<tr>
+			<td>Full home address</td>
+			<td><input type="text" name="home_address" id="home_address" required></td>
 		</tr>
 		<tr>
 		<td colspan="2">
@@ -68,7 +88,14 @@
 			<td>FIRST NAME</td>
 			<td>MIDDLE NAME</td>
 			<td>LAST NAME</td>
+			<td>GENDER</td>
+			<td>PRIMARY MOBILE</td>
+			<td>SECONDARY MOBILE</td>
+			<td>PRIMARY LANDLINE</td>
+			<td>SECONDARY LANDLINE</td>
 			<td>EMAIL ADDRESS</td>
+			<td>SKYPE ID</td>
+			<td>HOME ADDRESS</td>
 		</tr>
  	</table>
  
@@ -88,12 +115,26 @@
 		var fName = row.insertCell(1);
 		var mName = row.insertCell(2);
 		var lName = row.insertCell(3);
-		var emailaddress = row.insertCell(4);
+		var gend = row.insertCell(4);
+		var mobprimary = row.insertCell(5);
+		var mobsecondary = row.insertCell(6);
+		var llineprimary = row.insertCell(7);
+		var llinesecondary = row.insertCell(8);
+		var emailaddress = row.insertCell(9);
+		var skypeid = row.insertCell(10);
+		var homeaddress = row.insertCell(11);
 			cellId.appendChild(document.createTextNode(childKey));
 			fName.appendChild(document.createTextNode(childData.first_name));
 			mName.appendChild(document.createTextNode(childData.middle_name));   
-			lName.appendChild(document.createTextNode(childData.last_name));   
-			emailaddress.appendChild(document.createTextNode(childData.emailadd));   
+			lName.appendChild(document.createTextNode(childData.last_name));
+			gend.appendChild(document.createTextNode(childData.gender));
+			mobprimary.appendChild(document.createTextNode(childData.mobileprimary));
+			mobsecondary.appendChild(document.createTextNode(childData.mobilesecondary));
+			llineprimary.appendChild(document.createTextNode(childData.landlineprimary));
+			llinesecondary.appendChild(document.createTextNode(childData.landlinesecondary));
+			emailaddress.appendChild(document.createTextNode(childData.emailadd));
+			skypeid.appendChild(document.createTextNode(childData.skype_id));
+			homeaddress.appendChild(document.createTextNode(childData.home_address));
 			rowIndex = rowIndex + 1;
 		});
   		});
@@ -102,7 +143,14 @@
 		var first_name = document.getElementById('first_name').value;
 		var middle_name = document.getElementById('middle_name').value;
 		var last_name = document.getElementById('last_name').value;
+		var gender = document.getElementById('Gender').value;
+		var mobileprimary = document.getElementById('mobileprimary').value;
+		var mobilesecondary = document.getElementById('mobilesecondary').value;
+		var landlineprimary = document.getElementById('landlineprimary').value;
+		var landlinesecondary = document.getElementById('landlinesecondary').value;
 		var emailadd = document.getElementById('emailadd').value;
+		var skype_id = document.getElementById('skype_id').value;
+		var home_address = document.getElementById('home_address').value;
    
 		var uid = firebase.database().ref().child('users').push().key;
    
@@ -111,7 +159,14 @@
 		  	first_name: first_name,
 		  	middle_name: middle_name,
 		  	last_name: last_name,
-		  	emailadd: emailadd
+			gender: gender,
+			mobileprimary: mobileprimary,
+			mobilesecondary: mobilesecondary,
+			landlineprimary: landlineprimary,
+			landlinesecondary: landlinesecondary,
+		  	emailadd: emailadd,
+			skype_id: skype_id,
+			home_address: home_address
 	  	}
    
 	  	var updates = {};
@@ -124,18 +179,32 @@
   
   	function update_user(){
 	  	var first_name = document.getElementById('first_name').value;
-	  	var middle_name = document.getElementById('middle_name').value;
-	  	var last_name = document.getElementById('last_name').value;
-	  	var emailadd = document.getElementById('emailadd').value;
+		var middle_name = document.getElementById('middle_name').value;
+		var last_name = document.getElementById('last_name').value;
+		var gender = document.getElementById('Gender').value;
+		var mobileprimary = document.getElementById('mobileprimary').value;
+		var mobilesecondary = document.getElementById('mobilesecondary').value;
+		var landlineprimary = document.getElementById('landlineprimary').value;
+		var landlinesecondary = document.getElementById('landlinesecondary').value;
+		var emailadd = document.getElementById('emailadd').value;
+		var skype_id = document.getElementById('skype_id').value;
+		var home_address = document.getElementById('home_address').value;
    
 	  	var uid = firebase.database().ref().child('users').push().key;
    
 	  	var data = {
-		  	user_id: uid,
+			user_id: uid,
 		  	first_name: first_name,
 		  	middle_name: middle_name,
 		  	last_name: last_name,
-		  	emailadd: emailadd
+			gender: gender,
+			mobileprimary: mobileprimary,
+			mobilesecondary: mobilesecondary,
+			landlineprimary: landlineprimary,
+			landlinesecondary: landlinesecondary,
+		  	emailadd: emailadd,
+			skype_id: skype_id,
+			home_address: home_address
 	  	}
    
 	  	var updates = {};
